@@ -57,21 +57,21 @@ public class SuperTypeToken {
 
     static class TypeSafeMapClass {
 
-        Map<TypeReference<?>, Object> map = new HashMap<>();
+        Map<Type, Object> map = new HashMap<>();
 
         // 와일드카드 문법
         Map<TypeReference<?>, Object> typeSafeMap = new HashMap<>();
 
         <T> void put(TypeReference<T> tr, T value) {
-            map.put(tr, value);
+            map.put(tr.type, value);
         }
 
         <T> T get(TypeReference<T> tr) {
 
             if (tr.type instanceof Class<?>) {
-                return ((Class<T>) tr.type).cast(map.get(tr));
+                return ((Class<T>) tr.type).cast(map.get(tr.type));
             } else {
-                return ((Class<T>) ((ParameterizedType) tr.type).getRawType()).cast(map.get(tr));
+                return ((Class<T>) ((ParameterizedType) tr.type).getRawType()).cast(map.get(tr.type));
             }
 
         }
