@@ -2,6 +2,7 @@ package com.supertypetoken;
 
 import org.springframework.core.ResolvableType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ResolvableTypeClass {
@@ -13,5 +14,9 @@ public class ResolvableTypeClass {
         System.out.println(rti.getSuperType().getGenerics().length);
         System.out.println(rti.getSuperType().getGeneric(0).getType());
         System.out.println(rti.getSuperType().getGeneric(0).getNested(2).getType());
+
+        System.out.println(rt.hasUnresolvableGenerics());
+        System.out.println(rt.getSuperType().hasUnresolvableGenerics());
+        System.out.println(ResolvableType.forInstance(new ArrayList<String>()).hasUnresolvableGenerics());
     }
 }
