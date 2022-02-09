@@ -42,31 +42,31 @@ public class SuperTypeToken {
 
         // TypeToken의 한계를 넘은 SuerTypeToken
         TypeSafeMapClass m = new TypeSafeMapClass();
-        m.put(new TypeReference<Integer>(){} ,1);
-        m.put(new TypeReference<String>(){} ,"String");
-        m.put(new TypeReference<List<String>>(){} ,Arrays.asList("a","b","c"));
-        m.put(new TypeReference<List<Integer>>(){} ,Arrays.asList(1,2,3));
+        m.put(new TypeReference<Integer, String>(){} ,1);
+        m.put(new TypeReference<String, String>(){} ,"String");
+        m.put(new TypeReference<List<String>, String>(){} ,Arrays.asList("a","b","c"));
+        m.put(new TypeReference<List<Integer>, String>(){} ,Arrays.asList(1,2,3));
 
         // 익명클래스 인스턴스를 만들어서 익명클래스가 사용하고 있는 슈퍼클래스의 제네릭 타입 파라미터 정보를 전달하기 위한 용도 {}
-        System.out.println(m.get(new TypeReference<Integer>(){}));
-        System.out.println(m.get(new TypeReference<String>(){}));
-        System.out.println(m.get(new TypeReference<List<String>>(){}));
-        System.out.println(m.get(new TypeReference<List<Integer>>(){}));
+        System.out.println(m.get(new TypeReference<Integer, String>(){}));
+        System.out.println(m.get(new TypeReference<String, String>(){}));
+        System.out.println(m.get(new TypeReference<List<String>, String>(){}));
+        System.out.println(m.get(new TypeReference<List<Integer>, String>(){}));
      }
 
 
-    static class TypeSafeMapClass {
+    static class TypeSafeMapClass<T,R> {
 
         Map<Type, Object> map = new HashMap<>();
 
         // 와일드카드 문법
-        Map<TypeReference<?>, Object> typeSafeMap = new HashMap<>();
+        Map<TypeReference<?, ?>, Object> typeSafeMap = new HashMap<>();
 
-        <T> void put(TypeReference<T> tr, T value) {
+        <T> void put(TypeReference<T, R> tr, T value) {
             map.put(tr.type, value);
         }
 
-        <T> T get(TypeReference<T> tr) {
+        <T> T get(TypeReference<T, R> tr) {
 
             if (tr.type instanceof Class<?>) {
                 return ((Class<T>) tr.type).cast(map.get(tr.type));
