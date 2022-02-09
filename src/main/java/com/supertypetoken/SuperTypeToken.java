@@ -46,12 +46,14 @@ public class SuperTypeToken {
         m.put(new TypeReference<String, String>(){} ,"String");
         m.put(new TypeReference<List<String>, String>(){} ,Arrays.asList("a","b","c"));
         m.put(new TypeReference<List<Integer>, String>(){} ,Arrays.asList(1,2,3));
+        m.put(new TypeReference<Map<String, String>, String>(){} , Map.of("key1", "value1", "key2", "value2"));
 
         // 익명클래스 인스턴스를 만들어서 익명클래스가 사용하고 있는 슈퍼클래스의 제네릭 타입 파라미터 정보를 전달하기 위한 용도 {}
         System.out.println(m.get(new TypeReference<Integer, String>(){}));
         System.out.println(m.get(new TypeReference<String, String>(){}));
         System.out.println(m.get(new TypeReference<List<String>, String>(){}));
         System.out.println(m.get(new TypeReference<List<Integer>, String>(){}));
+        System.out.println(m.get(new TypeReference<Map<String, String>, String>(){}));
      }
 
 
